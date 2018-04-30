@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title> Document</title>
+	<link rel="stylesheet" type="text/css" href="_CSS_/style.css">
+</head>
+<body>
+	<div>这里是view/index/index.html</div>
+
+	<div>{$email|default='123'}:{$email|md5}</div>
+	<div>{$email}:{$email|substr=0,5}</div>
+	<div>{$email}:{$email|substr=###,0,5}</div>
+	<div>{$time}:{$time|date="y-m-d"}</div>
+	<div>{$assign}</div>
+	<div>{$assign2}</div>
+	<div>_CSS_</div>
+	<div>{$Think.server.HTTP_HOST}</div>
+	<div>{$Think.get.id}</div>
+	<div>{$Think.request.id}</div>
+	<div>{$Think.post.sid}</div>
+	</br>
+	<div>a={$a}</div>
+	<div>b={$b}</div>
+	<div>a+b={$a+$b}</div>
+<!--源码 可见	注释 -->
+	{/*不可见 注释*/}
+<!-- 不翻译 -->	
+{literal}
+	
+	{$email}
+	
+{/literal}
+	
+	</br>
+<!-- 	volist循环 -->
+	{volist name="list" id="data" offset="0" length="3"  empty="$empty" key="i"}
+			<div>{$mod}:{$i}:{$data.name}</div>
+	{/volist}
+
+	</br>
+	{foreach name="list" item="ite" key="s"}
+		<div>{$s}:{$ite.name}:{$ite.email}</div>
+	{/foreach}
+	</br>
+	{for star="1" end="10" step="2" name="k"}
+		<span>{$k}</span>
+	{/for}
+	<ul>
+		{for star="0" end="10"}
+			<li>{$i}</li>
+		{/for}
+	</ul>
+<!-- 	eq equal-->
+	{eq name="a" value="10"}
+		<div>相等</div>
+	{else/}
+		<div>不相等</div>
+	{/eq}
+<!-- 	neq notequal不相等 gt大于 egt大于等于 lt小于 elt小于等于-->
+	</br>
+<!-- 	switch-->
+	{switch name="Think.get.level"}
+		{case value="1|2"}<p>普通会员</p>{/case}
+		{case value="3"}<p>黄金会员</p>{/case}
+		{case value="4"}<p>钻石会员</p>{/case}
+		{default/}<p>游客</p>
+	{/switch}	
+
+
+<!-- range : type可为in、notin、between、notbetween-->
+	{range name="Think.get.level" value="1,2,3" type="in"}
+		<p>当前的level为1,2,3中的一个</p>
+	{else/}
+		<p>当前的level不是1,2,3中的任何一个</p>
+	{/range}
+<!-- 查看是否定义 -->
+	{defined name="APP_PATH"}
+		<p>APP_PATH已经定义</p>
+	{else/}
+		<p>APP_PATH未定义</p>
+	{/defined}
+<!-- if 不建议在view上使用 可用switch -->
+	{if condition="($Think.get.level==1) AND ($Think.gei.id==10)"}
+		<div>当前的level为1 且id为10</div>
+	{else/}
+		<div>当前的level不为1或者id不为10</div>
+	{/if}
+  </body>
+	
+</html>
