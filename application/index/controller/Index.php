@@ -5,10 +5,20 @@ use think\Request;
 use think\Controller;
 use think\View;
 use think\facade\Session;
+use think\Db;
 class Index extends Controller
 {
-	public function index(){
+	
+    public function index()
+    {
+		#初始界面
+        return '<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} a{color:#2E5CD5;cursor: pointer;text-decoration: none} a:hover{text-decoration:underline; } body{ background: #fff; font-family: "Century Gothic","Microsoft yahei"; color: #333;font-size:18px;} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.6em; font-size: 42px }</style><div style="padding: 24px 48px;"> <h1>:) </h1><p> ThinkPHP V5.1<br/><span style="font-size:30px">12载初心不改（2006-2018） - 你值得信赖的PHP框架</span></p></div><script type="text/javascript" src="https://tajs.qq.com/stats?sId=64890268" charset="UTF-8"></script><script type="text/javascript" src="https://e.topthink.com/Public/static/client.js"></script><think id="eab4b9f840753f8e7"></think>';//初始界面
+	
+		
+	}
+	public function index1(){
 		#默认模板的地址
+		#dump(config());
 		#return view();
 		#app/index/view/index/index.html
 		
@@ -55,20 +65,46 @@ class Index extends Controller
 		$this->assign('list',$list);
 		$this->assign('empty','这个数组没有数据');
 
-		return $this->fetch('index',['email' =>'417431006@qq.com','user' =>'sdad']);
-
+		return  $this->fetch('index1',['email' =>'417431006@qq.com','user' =>'sdad']);
+		
 		#劣势：前后端未分离
 		#return  $this->display('这是一个{$email}字符串{$assign}',['email' =>'417431006@qq.com']);
 	}
 
-   /* public function index()
-    {
-		#初始界面
-        return '<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} a{color:#2E5CD5;cursor: pointer;text-decoration: none} a:hover{text-decoration:underline; } body{ background: #fff; font-family: "Century Gothic","Microsoft yahei"; color: #333;font-size:18px;} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.6em; font-size: 42px }</style><div style="padding: 24px 48px;"> <h1>:) </h1><p> ThinkPHP V5.1<br/><span style="font-size:30px">12载初心不改（2006-2018） - 你值得信赖的PHP框架</span></p></div><script type="text/javascript" src="https://tajs.qq.com/stats?sId=64890268" charset="UTF-8"></script><script type="text/javascript" src="https://e.topthink.com/Public/static/client.js"></script><think id="eab4b9f840753f8e7"></think>';//初始界面
-	
+	public function index2(){
+     
+     	#数据库操作：查询
+  		// $res=Db::connect();
+		// dump($res);
+		#sql语句查询数据库
+		# my_user为建在数据库中的一个表，查询my_user表 id=1 的数据
+		//$res=Db::query("select * from my_user where id=?",[1]);
+		#sql语句插入
+		// $res =Db::execute("insert into my_user set id=?,username=?,password=?,email=?",[2,
+		// 	'second',
+		// 	md5('second'),
+		// 	'second@163.com',
+		// 	]);
+		#select 返回所有记录 二维数组  where为限制条件 没有为空
+		//$res=Db::table('my_user')->where(['id'=>'3'])->select();
+		#另一种写法my_user的表前缀my_在databas配置中的prefix
+		//$res=Db::name('user')->select();
+		#thinkphp提供的初始化函数 第三个参数：是否实例化
+		//$res=Db('user',[],false)->select();
+		#find 仅返回一条记录 一维数组 没有返回null
+		//$res=Db::table('my_user')->where(['id'=>'3'])->find();
+		#value 返回一条记录 为某字段的值 不存在返回null
+		//$res=Db::table('my_user')->where(['id'=>'2'])->value('username');
+		#column 返回一个数组 获取对应的一列值 若查询两个值 后一个为key 不存在返回空数组
+		//$res=Db::table('my_user')->column('username','email');
+		//dump($res);
 		
+		#数据库操作：插入 inset insetAll insetGetId:插入后返回id
+		$db=Db::name('user');
+		$res=$db->insetGetId([
+
+			]);
 	}
-*/
 	/*
 	
 	 public function index(Request $request){
@@ -96,7 +132,10 @@ class Index extends Controller
 		return "{$id}";
 	}
 	*/
-	
+	public  function page1()
+	{
+		return $this->fetch();
+	}
     public function hello($name = 'ThinkPHP5')
     {
         return 'hello,' . $name;
